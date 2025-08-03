@@ -1,0 +1,10 @@
+<!-- Placeholder for footer background - replace with actual image -->
+<svg width="695" height="649" viewBox="0 0 695 649" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="695" height="649" fill="url(#paint0_radial)"/>
+<defs>
+<radialGradient id="paint0_radial" cx="0.5" cy="0.5" r="0.5" gradientUnits="objectBoundingBox">
+<stop stop-color="#0883FD" stop-opacity="0.2"/>
+<stop offset="1" stop-color="#010510" stop-opacity="0.8"/>
+</radialGradient>
+</defs>
+</svg>

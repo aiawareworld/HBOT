@@ -1,16 +1,25 @@
 # H-Bot About Us Page
 
-A modern, responsive "About Us" page for H-Bot smart home automation company, built with pixel-perfect implementation from Figma designs.
+A modern, responsive About Us page for H-Bot smart home automation company, built with HTML5, CSS3, and JavaScript.
 
-## 🚀 Features
+## 🚀 Production Ready
 
-- **Pixel-perfect Figma implementation** - Precisely matches the original design specifications
-- **Responsive design** - Optimized for desktop, tablet, and mobile devices
-- **Modern CSS architecture** - Uses CSS custom properties and design tokens
-- **Interactive animations** - Smooth hover effects and transitions
-- **Glass morphism UI** - Modern frosted glass design elements
-- **Semantic HTML** - Accessible and SEO-friendly markup
-- **Cross-browser compatibility** - Works across all modern browsers
+**For immediate deployment**, use these production files:
+- `index-production.html` - Complete HTML with all optimizations
+- `styles-production.css` - Self-contained CSS with all styles
+- `script-production.js` - Production JavaScript with all features
+- `assets/` - All required icons and images (no external dependencies)
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for complete deployment instructions.
+
+## Features
+
+- **Responsive Design**: Optimized for all screen sizes from mobile to desktop
+- **Modern UI**: Glass morphism effects, gradient text, and smooth animations
+- **Performance Optimized**: Fast loading with efficient CSS and JavaScript
+- **Accessibility**: WCAG 2.1 compliant with proper semantic HTML
+- **SEO Ready**: Structured data and meta tags for search engines
+- **Self-Contained**: No external dependencies - ready to deploy anywhere
 
 ## 🛠️ Technologies Used
 

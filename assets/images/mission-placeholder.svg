@@ -1,0 +1,12 @@
+<!-- Placeholder for mission section image - replace with actual image -->
+<svg width="565" height="480" viewBox="0 0 565 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="565" height="480" rx="12" fill="url(#paint0_linear)"/>
+<text x="282.5" y="240" text-anchor="middle" fill="white" font-family="Readex Pro" font-size="24" font-weight="600">Mission Image</text>
+<text x="282.5" y="270" text-anchor="middle" fill="white" font-family="Readex Pro" font-size="16">Replace with actual image</text>
+<defs>
+<linearGradient id="paint0_linear" x1="0" y1="0" x2="565" y2="480" gradientUnits="userSpaceOnUse">
+<stop stop-color="#0883FD" stop-opacity="0.3"/>
+<stop offset="1" stop-color="#85CDFB" stop-opacity="0.1"/>
+</linearGradient>
+</defs>
+</svg>
