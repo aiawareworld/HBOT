@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - H-Bot</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:ital,opsz,wght@0,12..72,200..800;1,12..72,200..800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Readex Pro', sans-serif;
+            background-color: #010510;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(25px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 16px 32px;
+        }
+
+        nav .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-width: 600px;
+        }
+
+        nav .logo {
+            height: 28px;
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            opacity: 0.9;
+            transition: opacity 0.2s ease;
+        }
+
+        nav a:hover {
+            opacity: 1;
+        }
+
+        nav .get-started-btn {
+            background: linear-gradient(90deg, #0883fd, #85cdfb);
+            border: none;
+            padding: 8px 16px;
+            color: #fff;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        nav .get-started-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: #000;
+            overflow: hidden;
+        }
+
+        .hero-background {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+
+        .hero-background img {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.9) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            padding: 0 40px;
+        }
+
+        .hero-title {
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1.1;
+            color: #fff;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-divider {
+            height: 2px;
+            width: 200px;
+            background: linear-gradient(90deg, #0883fd, #85cdfb);
+            margin: 0 auto 32px;
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            font-weight: 400;
+            color: #fff;
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
+        }
+
+        .hero-brand {
+            font-size: 48px;
+            font-weight: 600;
+            background: linear-gradient(90deg, #0883fd 68.099%, #8cd1fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-description {
+            font-size: 16px;
+            font-weight: 300;
+            color: #fff;
+            line-height: 1.6;
+            opacity: 0.8;
+            letter-spacing: 0.02em;
+        }
+
+        /* Mission Section */
+        .mission-section {
+            position: relative;
+            padding: 80px 0;
+            background: #010510;
+        }
+
+        .mission-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .mission-image {
+            position: relative;
+        }
+
+        .mission-image img {
+            width: 100%;
+            height: 320px;
+            border-radius: 16px;
+            object-fit: cover;
+        }
+
+        .mission-content {
+            padding-left: 20px;
+        }
+
+        .mission-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .mission-label span {
+            font-size: 14px;
+            color: #fff;
+            opacity: 0.7;
+        }
+
+        .mission-label-line {
+            width: 120px;
+            height: 1px;
+            background: linear-gradient(90deg, #0883fd, #85cdfb);
+        }
+
+        .mission-brand {
+            font-size: 48px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #0883fd 68.099%, #8cd1fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            line-height: 1.1;
+        }
+
+        .mission-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .mission-description {
+            font-size: 14px;
+            font-weight: 300;
+            color: #d7d7d7;
+            line-height: 1.6;
+        }
+
+        /* Vision Section */
+        .vision-section {
+            padding: 60px 0;
+            background: #010510;
+            text-align: center;
+        }
+
+        .vision-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .vision-title {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #0883fd 68.099%, #8cd1fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .vision-description {
+            font-size: 14px;
+            font-weight: 300;
+            color: #d7d7d7;
+            line-height: 1.6;
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 60px 0;
+            background: #010510;
+        }
+
+        .services-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 40px;
+            text-align: center;
+        }
+
+        .services-title {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #0883fd 68.099%, #8cd1fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+
+        .services-description {
+            font-size: 14px;
+            font-weight: 300;
+            color: #d7d7d7;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .service-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 16px;
+            background: linear-gradient(90deg, #0883fd, #85cdfb);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .service-icon img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .service-card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .service-card p {
+            font-size: 12px;
+            color: #d7d7d7;
+            line-height: 1.4;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 60px 0;
+            background: #010510;
+            text-align: center;
+        }
+
+        .stats-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .stats-title {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #0883fd 68.099%, #8cd1fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+
+        .stats-description {
+            font-size: 14px;
+            font-weight: 300;
+            color: #d7d7d7;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 48px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #0883fd 68.099%, #8cd1fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            font-weight: 400;
+            color: #d7d7d7;
+            line-height: 1.4;
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            padding: 80px 0;
+            background: #010510;
+            text-align: center;
+            position: relative;
+        }
+
+        .newsletter-background {
+            position: absolute;
+            inset: 0;
+            background-image: url('http://localhost:3845/assets/035d3cf9865ee745a500bc73a120723a8033ed9c.png');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+        }
+
+        .newsletter-container {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .newsletter-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 32px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .newsletter-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .newsletter-btn {
+            background: linear-gradient(90deg, #0883fd, #85cdfb);
+            border: none;
+            padding: 12px 24px;
+            color: #fff;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .newsletter-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        /* Footer */
+        footer {
+            background: #010510;
+            padding: 60px 0 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand {
+            max-width: 300px;
+        }
+
+        .footer-logo {
+            height: 32px;
+            margin-bottom: 16px;
+        }
+
+        .footer-description {
+            font-size: 14px;
+            color: #d7d7d7;
+            line-height: 1.6;
+        }
+
+        .footer-column h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .footer-column a {
+            display: block;
+            color: #d7d7d7;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 8px;
+            transition: color 0.2s ease;
+        }
+
+        .footer-column a:hover {
+            color: #fff;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-copyright {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer-social a {
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            transition: background 0.2s ease;
+        }
+
+        .footer-social a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav .nav-container {
+                flex-direction: column;
+                gap: 12px;
+                min-width: auto;
+            }
+
+            nav {
+                padding: 12px 20px;
+                top: 20px;
+            }
+
+            .hero-title {
+                font-size: 48px;
+            }
+
+            .hero-brand {
+                font-size: 36px;
+            }
+
+            .hero-subtitle {
+                font-size: 18px;
+            }
+
+            .mission-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .hero-brand {
+                font-size: 28px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Decorative Background -->
+    <div style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-1;">
+        <img src="http://localhost:3845/assets/13ac83e87283ef43646df653059cf4475faf79e0.svg" alt="Ellipse" style="position:absolute;right:0;top:530px;width:202px;height:202px;opacity:0.5;">
+        <img src="http://localhost:3845/assets/6f7d3cfa05d45c2039040210e932668dde0313be.svg" alt="Ellipse" style="position:absolute;left:-256px;top:-314px;width:134px;height:1223px;transform:rotate(138.108deg) scaleY(-1);opacity:0.5;">
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <img src="http://localhost:3845/assets/15673388ecccae775456cf32ba8c59be9a5147c6.svg" alt="H-Bot Logo" class="logo">
+            <div class="nav-links">
+                <a href="#">About</a>
+                <a href="#">Services</a>
+                <a href="#">Portfolio</a>
+                <a href="#">Contact</a>
+                <button class="get-started-btn">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-background">
+            <img src="http://localhost:3845/assets/035d3cf9865ee745a500bc73a120723a8033ed9c.png" alt="Hero Background">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">About us</h1>
+            <div class="hero-divider"></div>
+            <h2 class="hero-subtitle">Discover the Story Behind</h2>
+            <h1 class="hero-brand">H-bot</h1>
+            <p class="hero-description">Welcome to H-BOT, a pioneering force in smart home automation. We specialize in designing and implementing cutting-edge technology solutions that enhance the way you interact with your living spaces. Our mission is to bring intelligence, convenience, and security to your home, making everyday life more efficient and enjoyable.</p>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission-section">
+        <div class="mission-container">
+            <div class="mission-image">
+                <img src="http://localhost:3845/assets/035d3cf9865ee745a500bc73a120723a8033ed9c.png" alt="Mission">
+            </div>
+            <div class="mission-content">
+                <div class="mission-label">
+                    <span>Our Mission</span>
+                    <div class="mission-label-line"></div>
+                </div>
+                <h1 class="mission-brand">H-bot</h1>
+                <h2 class="mission-title">Making Every Home Smarter & Safer</h2>
+                <p class="mission-description">We create intuitive and user-friendly automation solutions that transform homes into smart ecosystems. We are committed to delivering exceptional results.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision Section -->
+    <section class="vision-section">
+        <div class="vision-container">
+            <h2 class="vision-title">Our Vision</h2>
+            <p class="vision-description">We envision a future where homes are seamlessly integrated with smart technology, adapting to users' needs effortlessly. By leveraging the latest advancements in AI, IoT, and automation, we aim to redefine the concept of modern living.</p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section">
+        <div class="services-container">
+            <h2 class="services-title">What We Offer</h2>
+            <p class="services-description">At H-BOT, we provide a comprehensive range of smart home solutions tailored to fit every lifestyle:</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="http://localhost:3845/assets/4ad9b004bb5dc20481fd0651caca79427a90ed86.svg" alt="Smart Lighting">
+                    </div>
+                    <h3>Smart Lighting</h3>
+                    <p>Automated lighting systems that adjust to your schedule and mood.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon"></div>
+                    <h3>Home Security</h3>
+                    <p>AI-powered security cameras, smart locks, and alarm systems.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon"></div>
+                    <h3>Climate Control</h3>
+                    <p>Smart thermostats and HVAC systems for optimal comfort.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon"></div>
+                    <h3>Voice & App Control</h3>
+                    <p>Comprehensive voice and mobile app control systems.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon"></div>
+                    <h3>Entertainment Systems</h3>
+                    <p>Integrated audio and visual entertainment solutions.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon"></div>
+                    <h3>Business Integration</h3>
+                    <p>Smart office and commercial automation systems.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-container">
+            <h2 class="stats-title">Why Choose us</h2>
+            <p class="stats-description">Experience the perfect blend of innovation, customization, and reliability. With industry-leading expertise and user-friendly designs, H-BOT ensures your smart home is not just automated—but truly intelligent.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">10+</div>
+                    <div class="stat-label">Years of Expertise & Innovation</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">Customizable Solutions</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">95%</div>
+                    <div class="stat-label">User Satisfaction Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">24/7</div>
+                    <div class="stat-label">Support & Assistance</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="newsletter-background"></div>
+        <div class="newsletter-container">
+            <h2 class="newsletter-title">Subscribe for the latest updates, and exclusive offers.</h2>
+            <div class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Your Email">
+                <button class="newsletter-btn">Subscribe</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="http://localhost:3845/assets/15673388ecccae775456cf32ba8c59be9a5147c6.svg" alt="H-Bot Logo" class="footer-logo">
+                    <p class="footer-description">Smart home automation designed to simplify and elevate your lifestyle.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Home</h4>
+                    <a href="#">About us</a>
+                    <a href="#">Our Partners</a>
+                    <a href="#">FAQs</a>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Services</h4>
+                    <a href="#">R&D</a>
+                    <a href="#">Hospitality</a>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Contact</h4>
+                    <a href="#">El Nozha, Egypt</a>
+                    <a href="#">support@hbot.com</a>
+                    <a href="#">+20 12 81167100</a>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms & conditions</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="footer-copyright">2025 © MSOL.DEV All rights reserved.</p>
+                <div class="footer-social">
+                    <a href="#">f</a>
+                    <a href="#">📷</a>
+                    <a href="#">✕</a>
+                    <a href="#">💼</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

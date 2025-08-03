@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H-BOT - Smart Home Automation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Readex Pro', sans-serif;
+            background-color: #010510;
+            color: #ffffff;
+            line-height: 1.5;
+            overflow-x: hidden;
+            font-variation-settings: 'HEXP' 0;
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 100px;
+        }
+
+        /* Figma Design Variables - Extracted from Dev Mode */
+        :root {
+            /* GitHub Repository Configuration */
+            --github-repo: 'https://raw.githubusercontent.com/your-username/h-bot-about-us/main';
+            
+            /* Colors */
+            --white: #FFFFFF;
+            --primary-white: #FFFFFF;
+            --background: #010510;
+            --gradient-start: #0883fd;
+            --gradient-end: #85cdfb;
+            --gradient-alt-end: #8cd1fb;
+            --text-light: #d7d7d7;
+            --text-medium: #b4b4b4;
+            --text-selected: rgba(255, 255, 255, 0.5);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --shadow-color: rgba(1, 5, 16, 0.4);
+            --border-color: #1070ad;
+            --opacity-70: 0.7;
+            
+            /* Section Spacing - From Figma Dev Mode */
+            --section-padding-top: 120px;
+            --section-padding-bottom: 120px;
+            --section-padding-horizontal: 240px;
+            --container-max-width: 1440px;
+            --card-border-radius: 24px;
+            --button-border-radius: 12px;
+            
+            /* Typography Scales */
+            --font-size-hero: 80px;
+            --font-size-h1: 64px;
+            --font-size-h2: 48px;
+            --font-size-h3: 32px;
+            --font-size-body-large: 24px;
+            --font-size-body: 20px;
+            --font-size-small: 18px;
+            
+            /* Shadows */
+            --card-shadow: 0px 4px 10px rgba(1, 5, 16, 0.4);
+            --card-shadow-hover: 0px 8px 25px rgba(8, 131, 253, 0.25);
+            --button-shadow: 0px 0px 10px rgba(16, 112, 173, 0.7), 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Typography - Exact Figma Specifications */
+        .font-light { font-weight: 300; }
+        .font-regular { font-weight: 400; }
+        .font-medium { font-weight: 500; }
+        .font-semibold { font-weight: 600; }
+        .font-bold { font-weight: 700; }
+
+        /* Page Layout Structure - Updated with Figma Specs */
+        .page-wrapper {
+            width: 100%;
+            min-height: 100vh;
+            padding-top: 150px; /* Space for fixed nav */
+            position: relative;
+        }
+
+        .page-container {
+            width: 100%;
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            position: relative;
+            padding: 0 var(--section-padding-horizontal);
+        }
+        .nav-container {
+            position: fixed;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1450px;
+            height: 88px;
+            backdrop-filter: blur(25px);
+            background: var(--glass-bg);
+            border-radius: var(--card-border-radius);
+            box-shadow: var(--card-shadow);
+            z-index: 1000;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-logo {
+            width: 100.984px;
+            height: 31.258px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 0;
+            height: 88px;
+            align-items: center;
+        }
+
+        .nav-item {
+            padding: 16px 24px;
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--text-selected);
+            text-decoration: none;
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-item.active {
+            color: var(--white);
+            font-weight: 500;
+        }
+
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -44px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 95px;
+            height: 3px;
+            background-image: url('./assets/icons/nav-active-line.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            width: 283px;
+            justify-content: flex-end;
+        }
+
+        .search-btn {
+            width: 56px;
+            height: 56px;
+            backdrop-filter: blur(10px);
+            background: transparent;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0px 0px 10px 0px rgba(16, 112, 173, 0.7), 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-btn img {
+            width: 23.282px;
+            height: 23.282px;
+        }
+
+        .contact-btn {
+            width: 211px;
+            height: 56px;
+            backdrop-filter: blur(10px);
+            background: var(--glass-bg);
+            border: 2px solid var(--border-color);
+            border-radius: var(--button-border-radius);
+            box-shadow: var(--button-shadow);
+            color: var(--white);
+            font-size: 17px;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 0px 15px rgba(16, 112, 173, 0.9), 0px 6px 8px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+            border-color: transparent;
+        }
+
+        /* Page Header Section */
+        .page-header {
+            position: relative;
+            margin-top: 70px;
+            margin-left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 160px;
+            width: 100%;
+        }
+
+        .page-title {
+            font-size: var(--font-size-hero);
+            font-weight: 600;
+            color: var(--white);
+            white-space: nowrap;
+        }
+
+        .title-line {
+            width: 283px;
+            height: 2px;
+            background-image: url('./assets/icons/title-line.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        /* Decorative Elements */
+        .decorative-line-left {
+            position: absolute;
+            left: 0;
+            top: 200px;
+            width: 500px;
+            height: 2px;
+            background-image: url('./assets/icons/decorative-line.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            transform: rotate(90deg);
+        }
+
+        .decorative-ellipse-left {
+            position: absolute;
+            left: -256px;
+            top: -100px;
+            width: 134.578px;
+            height: 1223.08px;
+            background-image: url('./assets/icons/decorative-ellipse-left.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            transform: rotate(138.108deg) scaleY(-1);
+        }
+
+        .decorative-ellipse-right {
+            position: absolute;
+            right: -100px;
+            top: 530px;
+            width: 202px;
+            height: 202px;
+            background-image: url('./assets/icons/decorative-ellipse-right.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            margin-left: 0;
+            width: 100%;
+            max-width: 1327px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-bottom: 120px;
+            padding: 0 56px;
+        }
+
+        .hero-text {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: center;
+        }
+
+        .hero-subtitle {
+            font-size: var(--font-size-h3);
+            font-weight: 400;
+            color: var(--white);
+            white-space: nowrap;
+        }
+
+        .hero-title {
+            font-size: 72px;
+            font-weight: 700;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #0883fd 68.099%, #8cd1fb 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-description {
+            font-size: var(--font-size-body-large);
+            font-weight: 300;
+            color: var(--text-light);
+            line-height: 1.6;
+            width: 100%;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Main Content Container */
+        .main-content {
+            position: relative;
+            margin-left: 0;
+            width: 100%;
+            max-width: 1440px;
+            margin: 0 auto;
+            display: flex;
+            padding: 0 56px;
+        }
+
+        /* Mission Section - Updated Layout */
+        .mission-section {
+            height: auto;
+            width: 100%;
+            max-width: var(--container-max-width);
+            position: relative;
+            margin: var(--section-padding-top) auto var(--section-padding-bottom);
+            padding: 0 var(--section-padding-horizontal);
+        }
+
+        .mission-background {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(15px);
+            background: var(--glass-bg);
+            border-radius: var(--card-border-radius);
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mission-content-wrapper {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 48px;
+            padding: 48px;
+            min-height: 600px;
+        }
+
+        .mission-image {
+            flex: 0 0 565px;
+            height: 480px;
+            background-image: url('./assets/images/mission-hero.png');
+            background-size: cover;
+            background-position: center;
+            border-radius: var(--button-border-radius);
+            box-shadow: 0px 0px 7.3px var(--border-color);
+        }
+
+        .mission-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            max-width: 700px;
+        }
+
+        .mission-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .mission-label {
+            font-size: 18px;
+            font-weight: 400;
+            color: var(--white);
+            white-space: nowrap;
+        }
+
+        .mission-line {
+            width: 165px;
+            height: 2px;
+            background-image: url('./assets/icons/mission-line.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .mission-titles {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .mission-brand {
+            font-size: 72px;
+            font-weight: 700;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .mission-tagline {
+            font-size: var(--font-size-h2);
+            font-weight: 600;
+            color: var(--white);
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .mission-description {
+            font-size: var(--font-size-body);
+            font-weight: 300;
+            color: var(--text-light);
+            line-height: 1.6;
+            width: 100%;
+        }
+
+        /* Vision Section - Updated */
+        .vision-section {
+            display: flex;
+            flex-direction: column;
+            gap: 80px;
+            padding: var(--section-padding-top) var(--section-padding-horizontal) var(--section-padding-bottom);
+        }
+
+        .vision-container {
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+            align-items: center;
+            width: 100%;
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+        }
+
+        .vision-card {
+            width: 100%;
+            max-width: 1200px;
+            padding: 48px;
+            border-radius: var(--button-border-radius);
+            box-shadow: 0px 0px 40px inset rgba(46, 62, 80, 0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            align-items: center;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: var(--font-size-h1);
+            font-weight: 700;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .section-description {
+            font-size: var(--font-size-body);
+            font-weight: 300;
+            color: var(--text-light);
+            text-align: center;
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        .section-description.full-width {
+            width: 100%;
+            text-align: left;
+        }
+
+        .divider-line {
+            width: 100%;
+            height: 2px;
+            background-image: url('./assets/icons/divider-line.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            transform: rotate(180deg);
+        }
+
+        /* Services Grid - Updated Layout */
+        .services-section {
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+            align-items: center;
+            width: 100%;
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: var(--section-padding-top) var(--section-padding-horizontal) var(--section-padding-bottom);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .service-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border-radius: var(--card-border-radius);
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            height: 380px;
+            justify-content: space-between;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--card-shadow-hover);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .service-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            height: 100%;
+            justify-content: space-between;
+        }
+
+        .service-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .service-info {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .service-title {
+            font-size: var(--font-size-small);
+            font-weight: 600;
+            color: var(--white);
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .service-description {
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--text-light);
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .service-divider {
+            width: 226px;
+            height: 2px;
+            background-image: url('http://localhost:3845/assets/ae9c3d8ca23ca3ef222d0f857b6bdb469d75cca2.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            transform: rotate(90deg);
+        }
+
+        .section-divider {
+            width: 100%;
+            max-width: 1440px;
+            height: 2px;
+            background-image: url('http://localhost:3845/assets/59a0c8a2ac8e567c5cd42d24d180033f7aeb86ff.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            transform: rotate(180deg);
+            margin: 60px auto;
+        }
+
+        /* Stats Section - Updated */
+        .stats-section {
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+            width: 100%;
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: var(--section-padding-top) var(--section-padding-horizontal) var(--section-padding-bottom);
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+
+        .stats-header {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .stats-title {
+            font-size: var(--font-size-h1);
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--gradient-start) 68.099%, var(--gradient-alt-end) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stats-description {
+            font-size: var(--font-size-body);
+            font-weight: 300;
+            color: var(--text-light);
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 48px;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--gradient-start) 68.099%, var(--gradient-alt-end) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            white-space: nowrap;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--text-light);
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        /* Footer Section - Updated */
+        .footer-section {
+            position: relative;
+            width: 100%;
+            margin-top: var(--section-padding-top);
+            padding: var(--section-padding-top) var(--section-padding-horizontal) 50px;
+            background: linear-gradient(180deg, transparent 0%, rgba(1, 5, 16, 0.8) 100%);
+        }
+
+        .footer-background {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 695px;
+            height: 649px;
+            background-image: url('http://localhost:3845/assets/035d3cf9865ee745a500bc73a120723a8033ed9c.png');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 2;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border-radius: var(--card-border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--card-shadow);
+            padding: 72px 64px;
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 72px;
+        }
+
+        /* Newsletter Section - Updated */
+        .newsletter-section {
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+            align-items: center;
+            width: 100%;
+            text-align: center;
+        }
+
+        .newsletter-title {
+            font-size: var(--font-size-h2);
+            font-weight: 500;
+            color: var(--white);
+            text-align: center;
+            line-height: 1.3;
+            max-width: 600px;
+        }
+
+        .newsletter-form {
+            width: 100%;
+            max-width: 600px;
+            height: 64px;
+            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 8px 16px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        }
+
+        .newsletter-input {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--text-selected);
+            background: transparent;
+            border: none;
+            outline: none;
+            flex: 1;
+            padding-right: 16px;
+        }
+
+        .newsletter-input::placeholder {
+            color: var(--text-selected);
+        }
+
+        .newsletter-btn {
+            width: 140px;
+            height: 40px;
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+            border: 1.5px solid var(--white);
+            border-radius: 18px;
+            color: var(--white);
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 4px 12px rgba(8, 131, 253, 0.4);
+        }
+
+        .newsletter-btn {
+            width: 273px;
+            height: 76px;
+            background: linear-gradient(90deg, #0883fd 0%, #85cdfb 100%);
+            border: 1.5px solid var(--white);
+            border-left: 1.5px solid var(--white);
+            border-radius: 18px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            color: var(--white);
+            font-size: 20px;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 8px 15px 0px rgba(8, 131, 253, 0.4);
+            background: linear-gradient(90deg, #0a7deb 0%, #7bc5f3 100%);
+        }
+
+        /* Footer Links */
+        .footer-links {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .footer-brand {
+            width: 317px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-logo {
+            width: 158px;
+            height: 80px;
+            background-image: url('http://localhost:3845/assets/15673388ecccae775456cf32ba8c59be9a5147c6.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .footer-brand-text {
+            font-size: 18px;
+            font-weight: 300;
+            color: var(--text-medium);
+            line-height: 1.7;
+            width: 100%;
+        }
+
+        .footer-columns {
+            display: flex;
+            gap: 62px;
+        }
+
+        .footer-column {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .footer-column.home { width: 130px; }
+        .footer-column.services { width: 127px; }
+        .footer-column.contact { width: 192px; }
+        .footer-column.legal { width: 189px; }
+
+        .footer-column-title {
+            font-size: 18px;
+            font-weight: 400;
+            color: var(--text-medium);
+        }
+
+        .footer-column-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-link {
+            font-size: 20px;
+            font-weight: 400;
+            color: var(--white);
+            text-decoration: none;
+            line-height: 1.5;
+        }
+
+        /* Footer Bottom */
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .footer-copyright {
+            font-size: 18px;
+            font-weight: 300;
+            color: var(--text-medium);
+            white-space: nowrap;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 18px;
+            align-items: center;
+        }
+
+        .social-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            right: calc(50% - 841px);
+            bottom: 144px;
+            width: 50px;
+            height: 50px;
+            background-image: url('http://localhost:3845/assets/3d270bae3fff0f8fae5581d14ed477dee877b5e1.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            transform: rotate(270deg);
+            cursor: pointer;
+            border: none;
+            background-color: transparent;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .scroll-to-top:hover {
+            transform: rotate(270deg) scale(1.1);
+            opacity: 1 !important;
+        }
+
+        /* Mobile and Tablet Responsive Design */
+        @media (max-width: 768px) {
+            :root {
+                --section-padding-horizontal: 20px;
+                --section-padding-top: 40px;
+                --section-padding-bottom: 40px;
+                --font-size-hero: 48px;
+                --font-size-h1: 36px;
+                --font-size-h2: 32px;
+                --font-size-h3: 24px;
+            }
+            
+            .nav-container {
+                width: calc(100vw - 20px);
+                padding: 12px 16px;
+                flex-direction: column;
+                gap: 12px;
+                height: auto;
+            }
+            
+            .nav-menu {
+                order: 2;
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            
+            .nav-actions {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                gap: 12px;
+            }
+            
+            .contact-btn {
+                width: 140px;
+                font-size: 14px;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                gap: 16px;
+                margin-bottom: 60px;
+            }
+            
+            .hero-section {
+                text-align: center;
+                padding: 0 20px;
+            }
+            
+            .hero-title { font-size: 42px; }
+            .hero-subtitle { font-size: 24px; }
+            
+            .mission-content-wrapper {
+                flex-direction: column;
+                padding: 32px 20px;
+            }
+            
+            .mission-image {
+                width: 100%;
+                height: 250px;
+                margin-bottom: 32px;
+            }
+            
+            .mission-content {
+                text-align: center;
+            }
+            
+            .mission-brand { font-size: 42px; text-align: center; }
+            .mission-tagline { font-size: 28px; text-align: center; }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .service-card {
+                height: auto;
+                min-height: 300px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+                height: auto;
+                gap: 16px;
+                padding: 20px;
+            }
+            
+            .newsletter-input {
+                width: 100%;
+                padding: 12px 0;
+                text-align: center;
+            }
+            
+            .newsletter-btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .hero-title { font-size: 36px; }
+            .mission-brand { font-size: 36px; }
+        }
+        
+        /* Large Desktop 1920px+ */
+        @media (min-width: 1921px) {
+            .page-container { max-width: 1920px; }
+            .nav-container { max-width: 1450px; }
+        }
+
+        /* Standard Desktop 1440px-1920px */
+        @media (max-width: 1920px) {
+            :root {
+                --section-padding-horizontal: 200px;
+            }
+        }
+
+        /* Large Laptop 1280px-1440px */
+        @media (max-width: 1440px) {
+            :root {
+                --section-padding-horizontal: 120px;
+                --section-padding-top: 80px;
+                --section-padding-bottom: 80px;
+            }
+            
+            .nav-container { width: calc(100vw - 40px); max-width: 1200px; }
+            .hero-title { font-size: 64px; }
+            .mission-brand { font-size: 64px; }
+        }
+
+        /* Standard Laptop 1024px-1280px */
+        @media (max-width: 1280px) {
+            :root {
+                --section-padding-horizontal: 80px;
+            }
+            
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+        }
+
+        /* Tablet Landscape 768px-1024px */
+        @media (max-width: 1024px) {
+            :root {
+                --section-padding-horizontal: 40px;
+                --section-padding-top: 60px;
+                --section-padding-bottom: 60px;
+            }
+            
+            .nav-container { 
+                width: calc(100vw - 40px); 
+                height: auto; 
+                padding: 16px 20px; 
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .nav-menu { 
+                order: 2; 
+                width: 100%; 
+                justify-content: center; 
+            }
+            
+            .nav-actions { 
+                order: 3;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .hero-title { font-size: 48px; }
+            .mission-brand { font-size: 48px; }
+            .mission-content-wrapper { flex-direction: column; }
+            .mission-image { flex: none; width: 100%; height: 300px; }
+            .services-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* Standard Desktop 1440px-1920px */
+        @media (max-width: 1920px) {
+            .nav-container { width: calc(100vw - 40px); max-width: 1450px; }
+            .hero-section { width: calc(100vw - 600px); margin-left: calc((100vw - 1440px) / 2 + 353px); }
+            .main-content { width: calc(100vw - 480px); margin-left: calc((100vw - 1440px) / 2 + 240px); }
+            .mission-section { width: calc(100vw - 480px); }
+            .vision-container { width: calc(100vw - 480px); }
+            .services-section { width: calc(100vw - 480px); }
+            .stats-section { width: calc(100vw - 480px); }
+            .section-divider { width: calc(100vw - 480px); }
+        }
+
+        /* Large Laptop 1280px-1440px */
+        @media (max-width: 1440px) {
+            .page-container { width: 100%; padding: 0 40px; }
+            .page-header { margin-left: 5%; }
+            .hero-section { margin-left: 5%; width: 90%; }
+            .main-content { margin-left: 5%; width: 90%; }
+            .mission-section { width: 100%; }
+            .mission-content { left: 55%; width: 40%; }
+            .mission-image { width: 45%; left: 5%; }
+            .vision-container { width: 100%; }
+            .services-section { width: 100%; }
+            .stats-section { width: 100%; }
+            .section-divider { width: 100%; }
+            .decorative-ellipse-left { left: -100px; }
+            .decorative-ellipse-right { right: -100px; }
+        }
+
+        /* Standard Laptop 1024px-1280px */
+        @media (max-width: 1280px) {
+            .page-container { padding: 0 30px; }
+            .nav-container { width: calc(100vw - 60px); }
+            .page-header { margin-left: 3%; }
+            .hero-section { margin-left: 3%; width: 94%; }
+            .main-content { margin-left: 3%; width: 94%; }
+            .mission-content { left: 50%; width: 45%; }
+            .mission-image { width: 45%; left: 3%; }
+            .service-card { width: calc(50% - 16px); }
+            .services-row { flex-wrap: wrap; }
+            .stat-item { min-width: calc(25% - 16px); }
+        }
+
+        /* Tablet Landscape 768px-1024px */
+        @media (max-width: 1024px) {
+            .page-container { padding: 0 20px; }
+            .nav-container { 
+                width: calc(100vw - 40px); 
+                height: auto; 
+                padding: 20px; 
+                flex-direction: row; 
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+            .nav-menu { 
+                order: 3; 
+                width: 100%; 
+                justify-content: center; 
+                margin-top: 16px; 
+            }
+            
+            .page-header { margin-left: 0; text-align: center; }
+            .hero-section { margin-left: 0; width: 100%; text-align: center; }
+            .main-content { margin-left: 0; width: 100%; flex-direction: column; }
+            
+            .mission-section { height: auto; }
+            .mission-content { 
+                position: relative; 
+                left: 0; 
+                top: 20px; 
+                width: 100%; 
+                padding: 20px;
+                text-align: center;
+            }
+            .mission-image { 
+                position: relative; 
+                left: 0; 
+                top: 0; 
+                width: 100%; 
+                height: 400px; 
+                margin-bottom: 20px;
+            }
+            
+            .services-row { 
+                flex-direction: column; 
+                align-items: center; 
+                gap: 24px; 
+            }
+            .service-card { 
+                width: 100%; 
+                max-width: 400px; 
+            }
+            
+            .stats-grid { 
+                flex-wrap: wrap; 
+                justify-content: center; 
+            }
+            .stat-item { 
+                min-width: calc(50% - 16px); 
+                margin-bottom: 24px; 
+            }
+        }
+
+        /* Tablet Portrait 768px and below */
+        @media (max-width: 768px) {
+            .page-wrapper { padding-top: 120px; }
+            .page-container { padding: 0 16px; }
+            
+            /* Hide decorative elements on mobile for cleaner look */
+            .decorative-line-left,
+            .decorative-ellipse-left,
+            .decorative-ellipse-right { display: none; }
+            
+            .nav-container { 
+                width: calc(100vw - 32px); 
+                height: auto; 
+                padding: 16px; 
+                flex-direction: column; 
+                gap: 16px;
+                border-radius: 20px;
+            }
+            .nav-menu { 
+                height: auto; 
+                flex-wrap: wrap; 
+                justify-content: center; 
+                gap: 8px;
+            }
+            .nav-item { font-size: 14px; }
+            .nav-actions { width: auto; }
+            .contact-btn { width: 140px; font-size: 14px; }
+            
+            .page-header { 
+                margin-left: 0; 
+                text-align: center; 
+                flex-direction: column; 
+                gap: 16px; 
+                margin-bottom: 40px;
+            }
+            .page-title { font-size: 48px; }
+            .title-line { width: 200px; margin: 0 auto; }
+            
+            .hero-section { 
+                margin-left: 0; 
+                width: 100%; 
+                text-align: center; 
+                margin-bottom: 60px;
+            }
+            .hero-subtitle { font-size: 24px; }
+            .hero-title { font-size: 48px; }
+            .hero-description { font-size: 18px; text-align: left; }
+            
+            .main-content { 
+                margin-left: 0; 
+                width: 100%; 
+                flex-direction: column; 
+                gap: 60px;
+            }
+            
+            .mission-section { height: auto; }
+            .mission-background { position: relative; width: 100%; }
+            .mission-content { 
+                position: relative; 
+                left: 0; 
+                top: 0; 
+                width: 100%; 
+                padding: 30px 20px;
+                text-align: center;
+                order: 2;
+            }
+            .mission-image { 
+                position: relative; 
+                left: 0; 
+                top: 0; 
+                width: 100%; 
+                height: 300px; 
+                margin-bottom: 0;
+                order: 1;
+            }
+            
+            .vision-section { gap: 40px; }
+            .services-row { 
+                flex-direction: column; 
+                gap: 24px; 
+                align-items: center;
+            }
+            .service-card { 
+                width: 100%; 
+                max-width: 400px; 
+            }
+            .service-divider { display: none; }
+            
+            .stats-grid { 
+                flex-direction: column; 
+                gap: 32px; 
+                align-items: center;
+            }
+            .stat-item { width: 100%; text-align: center; }
+            .stat-label { width: auto; }
+            
+            .footer-section { margin-top: 80px; }
+            .newsletter-form { 
+                width: 100%; 
+                flex-direction: column; 
+                height: auto; 
+                padding: 20px; 
+                gap: 16px;
+            }
+            .newsletter-input { width: 100%; }
+            .newsletter-btn { width: 100%; }
+            
+            .footer-links { 
+                flex-direction: column; 
+                gap: 32px; 
+                text-align: center;
+            }
+            .footer-brand { text-align: center; }
+            .footer-columns { 
+                flex-wrap: wrap; 
+                gap: 32px; 
+                justify-content: center;
+            }
+            .footer-column { text-align: center; }
+            .footer-bottom { 
+                flex-direction: column; 
+                gap: 16px; 
+                text-align: center;
+            }
+        }
+
+        /* Mobile Large 425px-480px */
+        @media (max-width: 480px) {
+            .page-title { font-size: 36px; }
+            .hero-title { font-size: 36px; }
+            .section-title { font-size: 28px; }
+            .mission-brand { font-size: 32px; }
+            .mission-tagline { font-size: 24px; }
+            .service-title { font-size: 20px; }
+            .service-description { font-size: 14px; }
+            .stat-number { font-size: 32px; }
+            .newsletter-title { font-size: 24px; width: 100%; }
+            
+            .page-container { padding: 0 12px; }
+            .nav-container { width: calc(100vw - 24px); padding: 12px; }
+            .mission-content { padding: 20px 16px; }
+        }
+
+        /* Mobile Standard 320px-425px */
+        @media (max-width: 375px) {
+            .page-title { font-size: 32px; }
+            .hero-title { font-size: 32px; }
+            .hero-subtitle { font-size: 20px; }
+            .section-title { font-size: 24px; }
+            .mission-brand { font-size: 28px; }
+            .mission-tagline { font-size: 20px; }
+            .service-title { font-size: 18px; }
+            .stat-number { font-size: 28px; }
+            .newsletter-title { font-size: 20px; }
+            
+            .nav-item { font-size: 12px; }
+            .contact-btn { width: 120px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <img src="./assets/icons/h-bot-logo.svg" alt="H-Bot Logo" class="nav-logo">
+        
+        <div class="nav-menu">
+            <a href="#" class="nav-item">Home</a>
+            <a href="#" class="nav-item">Services</a>
+            <a href="#" class="nav-item active">About us</a>
+            <a href="#" class="nav-item">Contact</a>
+        </div>
+        
+        <div class="nav-actions">
+            <button class="search-btn">
+                <img src="./assets/icons/search-icon.svg" alt="Search">
+            </button>
+            <button class="contact-btn">Contact us</button>
+        </div>
+    </nav>
+
+    <!-- Page Wrapper -->
+    <div class="page-wrapper">
+        <div class="page-container">
+            <!-- Decorative Elements -->
+            <div class="decorative-line-left"></div>
+            <div class="decorative-ellipse-left"></div>
+            <div class="decorative-ellipse-right"></div>
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">About us</h1>
+                <div class="title-line"></div>
+            </div>
+
+            <!-- Hero Section -->
+            <div class="hero-section">
+                <div class="hero-text">
+                    <h2 class="hero-subtitle">Discover the Story Behind</h2>
+                    <h1 class="hero-title">
+                        <span class="gradient-text">H-bot</span>
+                    </h1>
+                </div>
+                <p class="hero-description">
+                    Welcome to H-BOT, a pioneering force in smart home automation. We specialize in designing and implementing cutting-edge technology solutions that enhance the way you interact with your living spaces. Our mission is to bring intelligence, convenience, and security to your home, making everyday life more efficient and enjoyable.
+                </p>
+            </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Mission Section -->
+        <div class="mission-section">
+            <div class="mission-background"></div>
+            <div class="mission-content-wrapper">
+                <div class="mission-image"></div>
+                <div class="mission-content">
+                    <div class="mission-header">
+                        <span class="mission-label">Our Mission</span>
+                        <div class="mission-line"></div>
+                    </div>
+                    <div class="mission-titles">
+                        <h2 class="mission-brand">
+                            <span class="gradient-text">H-bot</span>
+                        </h2>
+                        <h3 class="mission-tagline">Making Every Home Smarter & Safer</h3>
+                    </div>
+                    <p class="mission-description">
+                        We create intuitive and user-friendly automation solutions that transform homes into smart ecosystems. We are committed to delivering excellence in everything we do.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vision and Services Section -->
+        <div class="vision-section">
+            <div class="vision-container">
+                <!-- Vision Card -->
+                <div class="vision-card">
+                    <h2 class="section-title gradient-text">Our Vision</h2>
+                    <p class="section-description">
+                        We envision a future where homes are seamlessly integrated with smart technology, adapting to users' needs effortlessly. By leveraging the latest advancements in AI, IoT, and automation, we aim to redefine the concept of modern living.
+                    </p>
+                </div>
+
+                <!-- Divider Line -->
+                <div class="divider-line"></div>
+
+                <!-- Services Section -->
+                <div class="services-section">
+                    <div class="vision-card">
+                        <h2 class="section-title gradient-text">What We Offer</h2>
+                        <p class="section-description">
+                            At H-BOT, we provide a comprehensive range of smart home solutions tailored to fit every lifestyle:
+                        </p>
+                    </div>
+
+                    <div class="services-grid">
+                        <!-- First Row -->
+                        <div class="services-row">
+                            <div class="service-card">
+                                <div class="service-content">
+                                    <img src="./assets/icons/smart-lighting.svg" alt="Smart Lighting">
+                                    <div class="service-info">
+                                        <h3 class="service-title">Smart Lighting</h3>
+                                        <p class="service-description">Automated lighting systems that adjust to your schedule and mood.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="service-divider"></div>
+                            <div class="service-card">
+                                <div class="service-content">
+                                    <img src="./assets/icons/home-security.svg" alt="Home Security">
+                                    <div class="service-info">
+                                        <h3 class="service-title">Home Security</h3>
+                                        <p class="service-description">AI-powered security cameras, smart locks, and alarm systems.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="service-divider"></div>
+                            <div class="service-card">
+                                <div class="service-content">
+                                    <img src="./assets/icons/climate-control.svg" alt="Climate Control">
+                                    <div class="service-info">
+                                        <h3 class="service-title">Climate Control</h3>
+                                        <p class="service-description">Smart sensors optimize temperature, humidity, and air quality.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Second Row -->
+                        <div class="services-row">
+                            <div class="service-card">
+                                <div class="service-content">
+                                    <img src="./assets/icons/voice-control.svg" alt="Voice & App Control">
+                                    <div class="service-info">
+                                        <h3 class="service-title">Voice & App Control</h3>
+                                        <p class="service-description">Control everything with a simple voice command or via a mobile app.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="service-divider"></div>
+                            <div class="service-card">
+                                <div class="service-content">
+                                    <img src="./assets/icons/entertainment.svg" alt="Entertainment Systems">
+                                    <div class="service-info">
+                                        <h3 class="service-title">Entertainment Systems</h3>
+                                        <p class="service-description">Seamless integration of smart TVs, speakers, and home theaters.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="service-divider"></div>
+                            <div class="service-card">
+                                <div class="service-content">
+                                    <img src="./assets/icons/integration.svg" alt="Seamless Integration">
+                                    <div class="service-info">
+                                        <h3 class="service-title">Seamless Integration</h3>
+                                        <p class="service-description">Connecting devices and systems to work together harmoniously.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Divider -->
+            <div class="section-divider"></div>
+
+            <!-- Stats Section -->
+            <div class="stats-section">
+                <div class="stats-header">
+                    <h2 class="stats-title">Why Choose us</h2>
+                    <p class="stats-description">
+                        Experience the perfect blend of innovation, customization, and reliability. With industry-leading expertise and user-friendly designs, H-BOT ensures your smart home is not just automated—but truly intelligent.
+                    </p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Years of Expertise & Innovation</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Customizable Solutions</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">95%</div>
+                        <div class="stat-label">User Satisfaction Rate</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Support & Assistance</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-section">
+        <div class="footer-background">
+            <div class="footer-image"></div>
+            <div class="footer-glass"></div>
+        </div>
+
+        <div class="footer-content">
+            <!-- Newsletter Section -->
+            <div class="newsletter-section">
+                <h2 class="newsletter-title">Subscribe for the latest updates, and exclusive offers.</h2>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Your Email" class="newsletter-input">
+                    <button class="newsletter-btn">Subscribe</button>
+                </div>
+            </div>
+
+            <!-- Divider Line -->
+            <div class="divider-line"></div>
+
+            <!-- Footer Links -->
+            <div class="footer-links">
+                <div class="footer-brand">
+                    <div class="footer-logo"></div>
+                    <p class="footer-brand-text">Smart home automation designed to simplify and elevate your lifestyle.</p>
+                </div>
+
+                <div class="footer-columns">
+                    <div class="footer-column home">
+                        <h4 class="footer-column-title">Home</h4>
+                        <div class="footer-column-links">
+                            <a href="#" class="footer-link">About us</a>
+                            <a href="#" class="footer-link">Our Partners</a>
+                            <a href="#" class="footer-link">FAQS</a>
+                        </div>
+                    </div>
+
+                    <div class="footer-column services">
+                        <h4 class="footer-column-title">Services</h4>
+                        <div class="footer-column-links">
+                            <a href="#" class="footer-link">R&D</a>
+                            <a href="#" class="footer-link">Hospitality</a>
+                        </div>
+                    </div>
+
+                    <div class="footer-column contact">
+                        <h4 class="footer-column-title">Contact</h4>
+                        <div class="footer-column-links">
+                            <a href="#" class="footer-link">El Nozha, Egypt</a>
+                            <a href="#" class="footer-link">support@hbot.com</a>
+                            <a href="#" class="footer-link">+20 12 81167100</a>
+                        </div>
+                    </div>
+
+                    <div class="footer-column legal">
+                        <h4 class="footer-column-title">Legal</h4>
+                        <div class="footer-column-links">
+                            <a href="#" class="footer-link">Privacy Policy</a>
+                            <a href="#" class="footer-link">Terms & conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Another Divider Line -->
+            <div class="divider-line"></div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <p class="footer-copyright">2025 © MSOL.DEV All rights reserved.</p>
+                <div class="footer-socials">
+                    <img src="http://localhost:3845/assets/469a5915085c06fc8423090766a1f841cd050f1c.svg" alt="Social" class="social-icon">
+                    <img src="http://localhost:3845/assets/31b080f78dc45c6b8555445f77538c271ba5929c.svg" alt="Social" class="social-icon">
+                    <img src="http://localhost:3845/assets/e187bcd5f626da228dcaf1c976096047efaa4921.svg" alt="Social" class="social-icon">
+                    <img src="http://localhost:3845/assets/6a685e713709998887845d0392f3ba9d0173d5ef.svg" alt="Social" class="social-icon">
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll to Top Button -->
+        <button class="scroll-to-top"></button>
+    </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
