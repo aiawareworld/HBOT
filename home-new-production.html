@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H-Bot - The Future of Home Automation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@200;300;400;500;600;700;800&family=Satoshi:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Readex Pro', sans-serif;
+            background: #010510;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(1, 5, 16, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            padding: 20px 0;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #0883fd 0%, #8cd1fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            background: linear-gradient(135deg, #0883fd 0%, #8cd1fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #0883fd 0%, #8cd1fb 100%);
+            color: #ffffff;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(8, 131, 253, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 150px 0 100px;
+            text-align: center;
+            background: radial-gradient(ellipse at center, rgba(8, 131, 253, 0.1) 0%, transparent 70%);
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+
+        .hero .highlight {
+            background: linear-gradient(135deg, #0883fd 0%, #8cd1fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #C8CACC;
+            margin-bottom: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .primary-button {
+            background: linear-gradient(135deg, #0883fd 0%, #8cd1fb 100%);
+            color: #ffffff;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1.5px solid transparent;
+        }
+
+        .primary-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(8, 131, 253, 0.4);
+        }
+
+        .secondary-button {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: #ffffff;
+            padding: 16px 32px;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .secondary-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Product Grid */
+        .product-grid {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-label {
+            color: #ffffff;
+            font-size: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .section-label::before,
+        .section-label::after {
+            content: '';
+            width: 165px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, #ffffff 50%, transparent 100%);
+        }
+
+        .section-title {
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: #C8CACC;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .devices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .device-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .device-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(8, 131, 253, 0.2);
+            border-color: rgba(8, 131, 253, 0.3);
+        }
+
+        .device-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(8, 131, 253, 0.1) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .device-card:hover::before {
+            opacity: 1;
+        }
+
+        .device-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #0883fd 0%, #8cd1fb 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .device-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .device-card p {
+            color: #C8CACC;
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Product Showcase */
+        .product-showcase {
+            padding: 100px 0;
+        }
+
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-top: 60px;
+        }
+
+        .showcase-item {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            height: 481px;
+            background: #292929;
+        }
+
+        .showcase-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .showcase-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+            padding: 40px;
+            text-align: center;
+        }
+
+        .showcase-overlay h3 {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .showcase-overlay p {
+            color: #d8d8d8;
+            font-size: 20px;
+        }
+
+        /* Voice Control Section */
+        .voice-control {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .voice-demo {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 32px;
+            padding: 60px;
+            margin-top: 60px;
+            position: relative;
+        }
+
+        .voice-waveform {
+            width: 200px;
+            height: 60px;
+            margin: 0 auto 30px;
+            background: url('data:image/svg+xml,<svg viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg"><path d="M10 30 Q30 10 50 30 T90 30 T130 30 T170 30 T190 30" stroke="%230883fd" stroke-width="3" fill="none"/></svg>') center/contain no-repeat;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        .voice-text {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .voice-response {
+            color: #C8CACC;
+            font-size: 18px;
+        }
+
+        /* Dashboard Section */
+        .dashboard-section {
+            padding: 100px 0;
+        }
+
+        .dashboard-content {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .dashboard-text h2 {
+            font-size: 62px;
+            font-weight: 700;
+            margin-bottom: 40px;
+        }
+
+        .dashboard-text p {
+            font-size: 42px;
+            color: #d7d7d7;
+            line-height: 1.5;
+        }
+
+        .dashboard-image {
+            width: 100%;
+            border-radius: 24px;
+        }
+
+        /* Smart Controls Grid */
+        .smart-controls {
+            padding: 100px 0;
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(166px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .control-card {
+            background: #01121d;
+            border: 2.5px solid #1070ad;
+            border-radius: 18px;
+            padding: 20px;
+            height: 174px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(16, 112, 173, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .control-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(16, 112, 173, 0.4);
+        }
+
+        .control-icon {
+            width: 38px;
+            height: 38px;
+            background: #ff6e30;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #ffffff;
+            margin-bottom: auto;
+        }
+
+        .control-title {
+            font-size: 20px;
+            font-weight: 400;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 100px 0;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .testimonial-card {
+            background: #010510;
+            border: 1px solid #191c1f;
+            border-radius: 12px;
+            padding: 40px;
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .quote-icon {
+            width: 30px;
+            height: 30px;
+            margin-bottom: 24px;
+        }
+
+        .testimonial-text {
+            font-size: 14px;
+            font-weight: 300;
+            color: #d7d7d7;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .author-info h4 {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: #d7d7d7;
+            font-size: 16px;
+        }
+
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #333;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 100px 0;
+        }
+
+        .faq-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .faq-text h2 {
+            font-size: 72px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 40px;
+        }
+
+        .faq-text p {
+            font-size: 42px;
+            font-weight: 500;
+            color: #C8CACC;
+            line-height: 1.5;
+        }
+
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .faq-item {
+            background: #010510;
+            border-radius: 20px;
+            padding: 32px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            background: rgba(8, 131, 253, 0.05);
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .faq-toggle {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-answer {
+            margin-top: 20px;
+            color: #C8CACC;
+            line-height: 1.6;
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 100px 0 50px;
+            position: relative;
+        }
+
+        .footer-background {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1449px;
+            height: 908px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid #ffffff;
+            border-radius: 24px;
+            z-index: -1;
+        }
+
+        .footer-content {
+            max-width: 1325px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .newsletter {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .newsletter h2 {
+            font-size: 52px;
+            font-weight: 500;
+            margin-bottom: 60px;
+            max-width: 789px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.4;
+        }
+
+        .newsletter-form {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border-radius: 16px;
+            padding: 29px 10px 29px 24px;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 24px;
+            outline: none;
+            flex: 1;
+        }
+
+        .newsletter-button {
+            background: linear-gradient(135deg, #0883fd 0%, #85cdfb 100%);
+            color: #ffffff;
+            padding: 24px 62px;
+            border: none;
+            border-radius: 18px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .newsletter-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: 1.2fr repeat(4, 1fr);
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-column h3 {
+            font-size: 18px;
+            color: #b4b4b4;
+            margin-bottom: 18px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            background: linear-gradient(135deg, #0883fd 0%, #8cd1fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-brand {
+            margin-bottom: 20px;
+        }
+
+        .footer-brand .logo {
+            font-size: 32px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .footer-brand p {
+            color: #b4b4b4;
+            font-weight: 300;
+            line-height: 1.7;
+            max-width: 317px;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 60px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-bottom p {
+            color: #b4b4b4;
+            font-weight: 300;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 18px;
+        }
+
+        .social-links a {
+            width: 20px;
+            height: 20px;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .section-title {
+                font-size: 48px;
+            }
+
+            .dashboard-content,
+            .faq-content,
+            .showcase-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .dashboard-text h2 {
+                font-size: 42px;
+            }
+
+            .dashboard-text p {
+                font-size: 24px;
+            }
+
+            .faq-text h2 {
+                font-size: 48px;
+            }
+
+            .faq-text p {
+                font-size: 24px;
+            }
+
+            .footer-links {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .newsletter h2 {
+                font-size: 36px;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .controls-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .devices-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .controls-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+            }
+        }
+
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #0883fd 0%, #8cd1fb 100%);
+            border: none;
+            border-radius: 50%;
+            color: #ffffff;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(8, 131, 253, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="logo">H-Bot</div>
+            <ul class="nav-menu">
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#about">About us</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#products">Smart Lighting</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="cta-button">Get Started</button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>The <span class="highlight">Future</span> of <span class="highlight">Home</span><br>Automation is here</h1>
+            <p>Seamlessly integrating cutting-edge technology to create smarter, more efficient, and secure living environments tailored to your lifestyle.</p>
+            <div class="hero-cta">
+                <button class="primary-button">Get Started</button>
+                <button class="secondary-button">
+                    <span>Watch Demo</span>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M8 5V19L19 12L8 5Z" fill="currentColor"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Grid -->
+    <section class="product-grid">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Upgrade Your Space with</div>
+                <h2 class="section-title">Smart Home <span class="highlight">Solutions</span></h2>
+                <p class="section-subtitle">Transform your living space with our comprehensive range of intelligent devices designed for modern homes</p>
+            </div>
+            
+            <div class="devices-grid">
+                <div class="device-card">
+                    <div class="device-icon">🔒</div>
+                    <h3>Smart Lock</h3>
+                    <p>Secure access control with biometric and remote capabilities</p>
+                </div>
+                <div class="device-card">
+                    <div class="device-icon">📱</div>
+                    <h3>Smart LCD Panel</h3>
+                    <p>Central control hub for all your smart home devices</p>
+                </div>
+                <div class="device-card">
+                    <div class="device-icon">🌡️</div>
+                    <h3>Smart Thermostat</h3>
+                    <p>Intelligent climate control for optimal comfort and efficiency</p>
+                </div>
+                <div class="device-card">
+                    <div class="device-icon">🔔</div>
+                    <h3>Video Doorbell</h3>
+                    <p>See and communicate with visitors from anywhere</p>
+                </div>
+                <div class="device-card">
+                    <div class="device-icon">💡</div>
+                    <h3>Smart Lighting</h3>
+                    <p>Customizable lighting scenes and automated schedules</p>
+                </div>
+                <div class="device-card">
+                    <div class="device-icon">📹</div>
+                    <h3>Security Cameras</h3>
+                    <p>24/7 monitoring with AI-powered threat detection</p>
+                </div>
+                <div class="device-card">
+                    <div class="device-icon">🔥</div>
+                    <h3>Fire Detector</h3>
+                    <p>Advanced smoke and fire detection with instant alerts</p>
+                </div>
+                <div class="device-card">
+                    <div class="device-icon">🚿</div>
+                    <h3>Sprinkler Systems</h3>
+                    <p>Automated garden and lawn care systems</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Showcase -->
+    <section class="product-showcase">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Experience the Power of</div>
+                <h2 class="section-title"><span class="highlight">Smart</span> Innovation</h2>
+                <p class="section-subtitle">Discover how our cutting-edge devices transform everyday living</p>
+            </div>
+            
+            <div class="showcase-grid">
+                <div class="showcase-item">
+                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); display: flex; align-items: center; justify-content: center;">
+                        <div style="text-align: center; color: #fff;">
+                            <div style="font-size: 48px; margin-bottom: 20px;">📹</div>
+                            <h3>Smart Security Camera</h3>
+                        </div>
+                    </div>
+                    <div class="showcase-overlay">
+                        <h3>Smart Security Camera</h3>
+                        <p>Freestanding Tabletop Model</p>
+                    </div>
+                </div>
+                <div class="showcase-item">
+                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #2a1a1e 0%, #3e1621 100%); display: flex; align-items: center; justify-content: center;">
+                        <div style="text-align: center; color: #fff;">
+                            <div style="font-size: 48px; margin-bottom: 20px;">🔔</div>
+                            <h3>Smart Video Doorbell</h3>
+                        </div>
+                    </div>
+                    <div class="showcase-overlay">
+                        <h3>Smart Video Doorbells</h3>
+                        <p>Wall-Mounted Model</p>
+                    </div>
+                </div>
+                <div class="showcase-item">
+                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #1e1a2a 0%, #21163e 100%); display: flex; align-items: center; justify-content: center;">
+                        <div style="text-align: center; color: #fff;">
+                            <div style="font-size: 48px; margin-bottom: 20px;">🪟</div>
+                            <h3>Smart Curtains</h3>
+                        </div>
+                    </div>
+                    <div class="showcase-overlay">
+                        <h3>Smart Curtains & Shutters</h3>
+                        <p>Automated Light-Filtering System</p>
+                    </div>
+                </div>
+                <div class="showcase-item">
+                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #2a1e1a 0%, #3e2116 100%); display: flex; align-items: center; justify-content: center;">
+                        <div style="text-align: center; color: #fff;">
+                            <div style="font-size: 48px; margin-bottom: 20px;">👋</div>
+                            <h3>Motion Sensor</h3>
+                        </div>
+                    </div>
+                    <div class="showcase-overlay">
+                        <h3>Smart Motion Sensor</h3>
+                        <p>Wall-Mounted Model</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Voice Control Section -->
+    <section class="voice-control">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Ask and Play</div>
+                <h2 class="section-title">Voice Control Made <span class="highlight">Simple</span></h2>
+                <p class="section-subtitle">Control your entire smart home with simple voice commands</p>
+            </div>
+            
+            <div class="voice-demo">
+                <div class="voice-waveform"></div>
+                <div class="voice-text">"Hey H-Bot, turn on the living room lights"</div>
+                <div class="voice-response">✓ Living room lights are now on</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional Installation -->
+    <section class="product-showcase">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Professional Installation</div>
+                <h2 class="section-title">Expert <span class="highlight">Installation</span> Service</h2>
+                <p class="section-subtitle">Over 800 users have already trusted our expert partners for smooth and reliable smart home installations</p>
+            </div>
+            
+            <!-- User avatars carousel simulation -->
+            <div style="display: flex; justify-content: center; gap: 20px; margin: 40px 0;">
+                <div style="display: flex; gap: -10px;">
+                    <div style="width: 65px; height: 65px; border-radius: 50%; background: linear-gradient(45deg, #ff6b6b, #4ecdc4); border: 3px solid #fff;"></div>
+                    <div style="width: 65px; height: 65px; border-radius: 50%; background: linear-gradient(45deg, #45b7d1, #96ceb4); border: 3px solid #fff; margin-left: -15px;"></div>
+                    <div style="width: 65px; height: 65px; border-radius: 50%; background: linear-gradient(45deg, #f9ca24, #f0932b); border: 3px solid #fff; margin-left: -15px;"></div>
+                    <div style="width: 65px; height: 65px; border-radius: 50%; background: linear-gradient(45deg, #eb4d4b, #6c5ce7); border: 3px solid #fff; margin-left: -15px;"></div>
+                    <div style="width: 65px; height: 65px; border-radius: 50%; background: linear-gradient(45deg, #a55eea, #26de81); border: 3px solid #fff; margin-left: -15px;"></div>
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <button class="secondary-button" style="margin: 0 auto;">
+                    Request Service
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section class="dashboard-section">
+        <div class="container">
+            <div class="dashboard-content">
+                <div class="dashboard-text">
+                    <h2>Dashboard</h2>
+                    <p>We harness the power of both wired and wireless communication protocols to ensure unmatched reliability, efficiency, and control across every installation.</p>
+                </div>
+                <div>
+                    <div style="width: 100%; height: 600px; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 24px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px;">
+                        📱 Smart Home Dashboard Interface
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Smart Controls Grid -->
+    <section class="smart-controls">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Everything you love about</div>
+                <h2 class="section-title"><span class="highlight">H-bot</span> in one place.</h2>
+                <p class="section-subtitle">Real Stories, Real Success: Hear from Our Satisfied Clients</p>
+            </div>
+            
+            <div class="controls-grid">
+                <div class="control-card">
+                    <div class="control-icon">🔒</div>
+                    <div class="control-title">Smart Lock</div>
+                </div>
+                <div class="control-card">
+                    <div class="control-icon">👋</div>
+                    <div class="control-title">Motion Sensor</div>
+                </div>
+                <div class="control-card">
+                    <div class="control-icon">🪟</div>
+                    <div class="control-title">Shutters Control</div>
+                </div>
+                <div class="control-card">
+                    <div class="control-icon">🌡️</div>
+                    <div class="control-title">Smart Thermostat</div>
+                </div>
+                <div class="control-card">
+                    <div class="control-icon">📹</div>
+                    <div class="control-title">Security Cameras</div>
+                </div>
+                <div class="control-card">
+                    <div class="control-icon">🚿</div>
+                    <div class="control-title">Sprinkler Systems</div>
+                </div>
+                <div class="control-card">
+                    <div class="control-icon">❄️</div>
+                    <div class="control-title">Air Conditioners</div>
+                </div>
+                <div class="control-card">
+                    <div class="control-icon">💡</div>
+                    <div class="control-title">Smart light</div>
+                </div>
+                <div class="control-card">
+                    <div class="control-icon">🔊</div>
+                    <div class="control-title">Home Speaker</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Testimonials</div>
+                <h2 class="section-title">Trusted by innovators <span class="highlight">worldwide</span></h2>
+                <p class="section-subtitle">Real Stories, Real Success: Hear from Our Satisfied Clients</p>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="quote-icon">"</div>
+                    <p class="testimonial-text">I'm so glad I installed the gas leak sensor with H-bot. One night, it alerted me to a small leak in my kitchen, preventing a potentially dangerous situation. It's a lifesaver!</p>
+                    <div class="testimonial-author">
+                        <div class="author-info">
+                            <h4>Aly Essa</h4>
+                            <p>Designer</p>
+                        </div>
+                        <div class="author-avatar" style="background: linear-gradient(45deg, #ff6b6b, #4ecdc4);"></div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="quote-icon">"</div>
+                    <p class="testimonial-text">I love that I can create personalized scenes for different activities, like movie nights or dinner parties</p>
+                    <div class="testimonial-author">
+                        <div class="author-info">
+                            <h4>Mona Rabie</h4>
+                            <p>Marketer</p>
+                        </div>
+                        <div class="author-avatar" style="background: linear-gradient(45deg, #45b7d1, #96ceb4);"></div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="quote-icon">"</div>
+                    <p class="testimonial-text">My kids love the smart lighting! They can change the colors in their rooms, and it's made bedtime so much more fun. Plus, I love the automated security features. Makes me feel like a super-parent.</p>
+                    <div class="testimonial-author">
+                        <div class="author-info">
+                            <h4>Nour Adel</h4>
+                            <p>Creative Director</p>
+                        </div>
+                        <div class="author-avatar" style="background: linear-gradient(45deg, #f9ca24, #f0932b);"></div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="quote-icon">"</div>
+                    <p class="testimonial-text">After my office was broken into, I was terrified. I contacted H-bot, and they installed a comprehensive security system with cameras, motion sensors, and an alarm. Now, I feel completely safe. The peace of mind is priceless.</p>
+                    <div class="testimonial-author">
+                        <div class="author-info">
+                            <h4>Ramy Homied</h4>
+                            <p>Startup Founder</p>
+                        </div>
+                        <div class="author-avatar" style="background: linear-gradient(45deg, #eb4d4b, #6c5ce7);"></div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="quote-icon">"</div>
+                    <p class="testimonial-text">H-bot has transformed my home into a truly smart living space. I can't imagine life without it now.</p>
+                    <div class="testimonial-author">
+                        <div class="author-info">
+                            <h4>Mayada Hussien</h4>
+                            <p>Freelancer</p>
+                        </div>
+                        <div class="author-avatar" style="background: linear-gradient(45deg, #a55eea, #26de81);"></div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="quote-icon">"</div>
+                    <p class="testimonial-text">I travel a lot, and being able to control everything remotely lights, doors, cameras — has been a huge relief. Thank you, H-Bot!</p>
+                    <div class="testimonial-author">
+                        <div class="author-info">
+                            <h4>Marwan Maged</h4>
+                            <p>Traveller Expert</p>
+                        </div>
+                        <div class="author-avatar" style="background: linear-gradient(45deg, #fd79a8, #fdcb6e);"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="faq-content">
+                <div class="faq-text">
+                    <div class="section-label">FAQ</div>
+                    <h2>Frequently Asked <span class="highlight">Questions</span></h2>
+                    <p>Everything You Need to Know About Working With Us</p>
+                </div>
+                
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What smart home devices do you offer?</span>
+                            <button class="faq-toggle">+</button>
+                        </div>
+                        <div class="faq-answer">
+                            We offer a comprehensive range including smart lighting, security cameras, door locks, thermostats, motion sensors, and complete automation systems tailored to your needs.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How long does installation take?</span>
+                            <button class="faq-toggle">+</button>
+                        </div>
+                        <div class="faq-answer">
+                            Installation typically takes 4-8 hours depending on the complexity of your system. Our expert technicians ensure everything is set up perfectly and provide complete training.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Do you provide warranty and support?</span>
+                            <button class="faq-toggle">+</button>
+                        </div>
+                        <div class="faq-answer">
+                            Yes, we provide comprehensive warranty coverage and 24/7 technical support. Our team is always ready to help with any questions or issues you might have.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Can I control everything from my phone?</span>
+                            <button class="faq-toggle">+</button>
+                        </div>
+                        <div class="faq-answer">
+                            Absolutely! Our H-Bot app gives you complete control over all your smart home devices from anywhere in the world. You can monitor, control, and automate everything remotely.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Is the system secure from hackers?</span>
+                            <button class="faq-toggle">+</button>
+                        </div>
+                        <div class="faq-answer">
+                            Security is our top priority. We use advanced encryption, secure protocols, and regular security updates to protect your smart home from any cyber threats.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-background"></div>
+        <div class="footer-content">
+            <div class="newsletter">
+                <h2>Subscribe for the latest updates, and exclusive offers.</h2>
+                <div class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Your Email">
+                    <button class="newsletter-button">Subscribe</button>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <div class="footer-column">
+                    <div class="footer-brand">
+                        <div class="logo">H-Bot</div>
+                        <p>Smart home automation designed to simplify and elevate your lifestyle.</p>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Home</h3>
+                    <ul>
+                        <li><a href="#about">About us</a></li>
+                        <li><a href="#partners">Our Partners</a></li>
+                        <li><a href="#faq">FAQS</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#rd">R&D</a></li>
+                        <li><a href="#hospitality">Hospitality</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><a href="#">El Nozha, Egypt</a></li>
+                        <li><a href="mailto:support@hbot.com">support@hbot.com</a></li>
+                        <li><a href="tel:+201281167100">+20 12 81167100</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#privacy">Privacy Policy</a></li>
+                        <li><a href="#terms">Terms & conditions</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>2025 © MSOL.DEV All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="Twitter">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987 6.62 0 11.987-5.367 11.987-11.987C24.014 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.348-1.051-2.348-2.348 0-1.297 1.051-2.348 2.348-2.348 1.297 0 2.348 1.051 2.348 2.348 0 1.297-1.051 2.348-2.348 2.348zm7.718 0c-1.297 0-2.348-1.051-2.348-2.348 0-1.297 1.051-2.348 2.348-2.348 1.297 0 2.348 1.051 2.348 2.348 0 1.297-1.051 2.348-2.348 2.348z"/>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="LinkedIn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to top button -->
+    <button class="scroll-top" onclick="scrollToTop()" aria-label="Scroll to top">
+        ↑
+    </button>
+
+    <script>
+        // FAQ Toggle Functionality
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Close all FAQ items
+                document.querySelectorAll('.faq-item').forEach(faq => {
+                    faq.classList.remove('active');
+                });
+                
+                // Open clicked item if it wasn't active
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Scroll to top functionality
+        window.addEventListener('scroll', () => {
+            const scrollTop = document.querySelector('.scroll-top');
+            if (window.pageYOffset > 300) {
+                scrollTop.classList.add('visible');
+            } else {
+                scrollTop.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.device-card, .testimonial-card, .showcase-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Newsletter form submission
+        document.querySelector('.newsletter-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.querySelector('.newsletter-input').value;
+            if (email) {
+                alert('Thank you for subscribing!');
+                document.querySelector('.newsletter-input').value = '';
+            }
+        });
+
+        // CTA button interactions
+        document.querySelectorAll('.cta-button, .primary-button').forEach(button => {
+            button.addEventListener('click', () => {
+                alert('Thank you for your interest! Our team will contact you soon.');
+            });
+        });
+    </script>
+</body>
+</html>

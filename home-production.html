@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBOT - Smart Home Automation</title>
+    <meta name="description" content="Smart home automation designed to simplify and elevate your lifestyle. Control lighting, security, and more with HBOT.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@200;300;400;500;600;700&family=Satoshi:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Readex Pro', sans-serif;
+            background-color: #010510;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(25px);
+            border-radius: 24px;
+            padding: 0 24px;
+            z-index: 1000;
+            width: calc(100% - 80px);
+            max-width: 1450px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 10px rgba(1, 5, 16, 0.2);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 88px;
+            padding: 0 32px;
+        }
+
+        .logo {
+            width: 101px;
+            height: 31px;
+            background: url('data:image/svg+xml,<svg viewBox="0 0 101 31" xmlns="http://www.w3.org/2000/svg"><text x="0" y="20" fill="%23ffffff" font-family="Readex Pro" font-size="24" font-weight="600">HBOT</text></svg>') no-repeat;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0;
+            list-style: none;
+        }
+
+        .nav-link {
+            padding: 16px 24px;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link.active,
+        .nav-link:hover {
+            color: #ffffff;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 95px;
+            height: 2px;
+            background: linear-gradient(90deg, #0883FD, #8CD1FB);
+            border-radius: 1px;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .search-btn {
+            width: 56px;
+            height: 56px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(16, 112, 173, 0.7);
+        }
+
+        .search-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .contact-btn {
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid #1070AD;
+            border-radius: 12px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 17px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(16, 112, 173, 0.7);
+        }
+
+        .contact-btn:hover {
+            background: rgba(16, 112, 173, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(1, 5, 16, 0.8) 0%, #010510 100%),
+                        url('data:image/svg+xml,<svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg"><rect fill="%23010510" width="1920" height="1080"/><circle cx="960" cy="540" r="300" fill="url(%23heroGrad)" opacity="0.3"/><defs><radialGradient id="heroGrad"><stop offset="0%" stop-color="%230883FD"/><stop offset="100%" stop-color="%23010510"/></radialGradient></defs></svg>');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            padding: 120px 20px 80px;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(25px);
+            padding: 12px 24px;
+            border-radius: 12px;
+            margin-bottom: 48px;
+            font-size: 22px;
+            color: #ffffff;
+            box-shadow: 0 4px 10px rgba(1, 5, 16, 0.2);
+        }
+
+        .hero-title {
+            font-size: clamp(48px, 6vw, 82px);
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 32px;
+            background: linear-gradient(135deg, #ffffff 0%, #8CD1FB 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 22px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 48px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #0883FD 0%, #85CDFB 100%);
+            color: #ffffff;
+            padding: 24px 48px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(8, 131, 253, 0.3);
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 48px rgba(8, 131, 253, 0.4);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 120px 20px;
+            background: #010510;
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 32px;
+            color: #ffffff;
+            font-size: 18px;
+        }
+
+        .section-badge::before,
+        .section-badge::after {
+            content: '';
+            width: 165px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, #1070AD 50%, transparent 100%);
+        }
+
+        .section-title {
+            font-size: clamp(48px, 5vw, 72px);
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 32px;
+        }
+
+        .section-title .gradient {
+            background: linear-gradient(135deg, #0883FD 0%, #8CD1FB 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-description {
+            font-size: 18px;
+            color: #C8CACC;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 48px;
+            margin-top: 80px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 48px 32px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(16, 112, 173, 0.5);
+            box-shadow: 0 20px 60px rgba(8, 131, 253, 0.2);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            background: linear-gradient(135deg, #0883FD 0%, #8CD1FB 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+        }
+
+        .feature-title {
+            font-size: 26px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            color: #ffffff;
+        }
+
+        .feature-description {
+            font-size: 18px;
+            color: #C8CACC;
+            line-height: 1.5;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 120px 20px;
+            background: linear-gradient(135deg, rgba(8, 131, 253, 0.1) 0%, rgba(1, 5, 16, 0.9) 100%);
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: clamp(36px, 4vw, 52px);
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 24px;
+            color: #ffffff;
+        }
+
+        .cta-description {
+            font-size: 20px;
+            color: #C8CACC;
+            margin-bottom: 48px;
+            line-height: 1.5;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #0883FD 0%, #85CDFB 100%);
+            color: #ffffff;
+            padding: 18px 36px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(8, 131, 253, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 48px rgba(8, 131, 253, 0.4);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 18px 36px;
+            border: 2px solid #1070AD;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(16, 112, 173, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: #010510;
+            padding: 80px 20px 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1440px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 80px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand {
+            max-width: 400px;
+        }
+
+        .footer-logo {
+            width: 158px;
+            height: 80px;
+            margin-bottom: 24px;
+            background: url('data:image/svg+xml,<svg viewBox="0 0 158 80" xmlns="http://www.w3.org/2000/svg"><text x="0" y="50" fill="%23ffffff" font-family="Readex Pro" font-size="36" font-weight="600">HBOT</text></svg>') no-repeat;
+        }
+
+        .footer-description {
+            font-size: 18px;
+            color: #B4B4B4;
+            line-height: 1.7;
+            margin-bottom: 32px;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 48px;
+        }
+
+        .footer-column h3 {
+            font-size: 18px;
+            color: #B4B4B4;
+            margin-bottom: 24px;
+            font-weight: 400;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: #0883FD;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #B4B4B4;
+            font-size: 18px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 18px;
+        }
+
+        .social-links a {
+            width: 20px;
+            height: 20px;
+            background: #ffffff;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: #0883FD;
+            transform: translateY(-2px);
+        }
+
+        /* Scroll to top button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #0883FD 0%, #85CDFB 100%);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(8, 131, 253, 0.3);
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(8, 131, 253, 0.5);
+        }
+
+        .scroll-to-top.visible {
+            display: flex;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                width: calc(100% - 40px);
+                top: 20px;
+            }
+
+            .nav-container {
+                padding: 0 16px;
+                height: 72px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 100px 20px 60px;
+            }
+
+            .hero-title {
+                font-size: 48px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 24px;
+                text-align: center;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-badge {
+                font-size: 18px;
+                padding: 8px 16px;
+            }
+
+            .feature-card {
+                padding: 32px 24px;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+        }
+
+        /* Animation classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .fade-in-delay {
+            animation-delay: 0.2s;
+        }
+
+        .fade-in-delay-2 {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            opacity: 0;
+        }
+
+        .loaded {
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+    </style>
+</head>
+<body class="loading">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"></div>
+            <ul class="nav-links">
+                <li><a href="home-production.html" class="nav-link active">Home</a></li>
+                <li><a href="index-production.html" class="nav-link">About Us</a></li>
+                <li><a href="smart-lighting-production.html" class="nav-link">Smart Lighting</a></li>
+                <li><a href="services-production.html" class="nav-link">Services</a></li>
+                <li><a href="contact-production.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="search-btn" aria-label="Search">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+                <a href="contact-production.html" class="contact-btn">Contact us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge fade-in">
+                🏠 Smart Home Innovation
+            </div>
+            <h1 class="hero-title fade-in fade-in-delay">
+                Transform Your Home Into a Smart Living Experience
+            </h1>
+            <p class="hero-subtitle fade-in fade-in-delay-2">
+                Discover intelligent automation that adapts to your lifestyle. From smart lighting to advanced security systems, we bring cutting-edge technology to every corner of your home.
+            </p>
+            <a href="smart-lighting-production.html" class="hero-cta fade-in fade-in-delay-2">
+                Explore Smart Solutions
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">
+                    Smart Solutions
+                </div>
+                <h2 class="section-title">
+                    Why Choose <span class="gradient">HBOT</span>
+                </h2>
+                <p class="section-description">
+                    Experience the future of home automation with our comprehensive smart home solutions designed for modern living.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">💡</div>
+                    <h3 class="feature-title">Smart Lighting Control</h3>
+                    <p class="feature-description">
+                        Advanced lighting systems that adapt to your schedule, mood, and preferences with voice control and app integration.
+                    </p>
+                </div>
+
+                <div class="feature-card fade-in fade-in-delay">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">Enhanced Security</h3>
+                    <p class="feature-description">
+                        Comprehensive security solutions with smart cameras, sensors, and automated alerts to keep your home safe.
+                    </p>
+                </div>
+
+                <div class="feature-card fade-in fade-in-delay-2">
+                    <div class="feature-icon">🌡️</div>
+                    <h3 class="feature-title">Climate Control</h3>
+                    <p class="feature-description">
+                        Intelligent temperature management that learns your preferences and optimizes comfort while saving energy.
+                    </p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🎵</div>
+                    <h3 class="feature-title">Entertainment Systems</h3>
+                    <p class="feature-description">
+                        Seamlessly integrated audio and video systems that create immersive entertainment experiences throughout your home.
+                    </p>
+                </div>
+
+                <div class="feature-card fade-in fade-in-delay">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="feature-title">Mobile Control</h3>
+                    <p class="feature-description">
+                        Control your entire smart home ecosystem from anywhere using our intuitive mobile app with real-time monitoring.
+                    </p>
+                </div>
+
+                <div class="feature-card fade-in fade-in-delay-2">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Energy Efficiency</h3>
+                    <p class="feature-description">
+                        Smart energy management that reduces consumption and costs while maintaining optimal comfort and functionality.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2 class="cta-title fade-in">
+                Ready to Upgrade Your Home?
+            </h2>
+            <p class="cta-description fade-in fade-in-delay">
+                Join thousands of homeowners who have transformed their living spaces with HBOT's smart home solutions. Experience convenience, security, and efficiency like never before.
+            </p>
+            <div class="cta-buttons fade-in fade-in-delay-2">
+                <a href="contact-production.html" class="btn-primary">Get Started Today</a>
+                <a href="index-production.html" class="btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo"></div>
+                <p class="footer-description">
+                    Smart home automation designed to simplify and elevate your lifestyle.
+                </p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h3>Home</h3>
+                    <ul>
+                        <li><a href="index-production.html">About us</a></li>
+                        <li><a href="#partners">Our Partners</a></li>
+                        <li><a href="#faq">FAQs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#rd">R&D</a></li>
+                        <li><a href="#hospitality">Hospitality</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><a href="#location">El Nozha, Egypt</a></li>
+                        <li><a href="mailto:support@hbot.com">support@hbot.com</a></li>
+                        <li><a href="tel:+201281167100">+20 12 81167100</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#privacy">Privacy Policy</a></li>
+                        <li><a href="#terms">Terms & conditions</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>2025 © MSOL.DEV All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"></a>
+                <a href="#" aria-label="Twitter"></a>
+                <a href="#" aria-label="Instagram"></a>
+                <a href="#" aria-label="LinkedIn"></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 15l-6-6-6 6"/>
+        </svg>
+    </button>
+
+    <script>
+        // Page loading animation
+        window.addEventListener('load', function() {
+            document.body.classList.remove('loading');
+            document.body.classList.add('loaded');
+        });
+
+        // Scroll to top functionality
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Search functionality (placeholder)
+        document.querySelector('.search-btn').addEventListener('click', function() {
+            alert('Search functionality would be implemented here');
+        });
+
+        // Performance monitoring
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+                console.log('Page load time:', loadTime + 'ms');
+            }, 0);
+        });
+    </script>
+</body>
+</html>
